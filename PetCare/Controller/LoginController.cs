@@ -8,7 +8,7 @@ using PetCare.View.LoginView;
 
 namespace PetCare
 {
-    public static class LoginController
+    public class LoginController
     {
         public static void Index()
         {
@@ -20,18 +20,29 @@ namespace PetCare
             int LoginID = Validate(uname, pass);
             if (LoginID >= 0)
             {
-                IndexView.Success();
-                MainMenuController.Index(LoginID);
+                LoginSuccess(LoginID);
             }
             else
             {
-                IndexView.Failed();
-                Exit.Now();
-                Index();
+                LoginFailed();
             }
         }
 
-        public static int Validate(string uname, string pass)
+        private static void LoginSuccess(int LoginID)
+        {
+            IndexView.Success();
+            MainMenuController mainMenuController = new();
+            mainMenuController.Index(LoginID);
+        }
+
+        private static void LoginFailed()
+        {
+            IndexView.Failed();
+            Exit.Now();
+            Index();
+        }
+
+        private static int Validate(string uname, string pass)
         {
             using var db = new AppPetCareContext();
             if (db.Customers.Where(cust => cust.Username == uname && cust.Password == pass).Any())

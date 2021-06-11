@@ -12,23 +12,22 @@ namespace PetCare.View.ReservationManageMenuView
         {
             Console.Clear();
             Console.WriteLine("== Pet Care Reservation =========");
-
             PrintList(CustID);
-
             PrintMenu();
-
             Console.Write("Input: ");
             string opt = Console.ReadLine().ToLower();
 
-            ReservationManageMenuController.Index(CustID, opt);
+            ReservationManageMenuController reservationManageMenu = new();
+            reservationManageMenu.Index(CustID, opt);
         }
 
         private static void PrintMenu()
         {
-            Console.WriteLine("Select pet for the services:");
-            Console.WriteLine("\ta. Select from the menu");
-            Console.WriteLine("\tb. Register another pet");
-            Console.WriteLine("\tc. Back");
+            Console.WriteLine(
+                "Select pet for the services:\n" +
+                "\ta. Select from the menu\n" +
+                "\tb. Register another pet\n" +
+                "\tc. Back");
         }
 
         public static void Failed()

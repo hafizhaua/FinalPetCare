@@ -12,12 +12,10 @@ namespace PetCare
     {
 		public static void Index(int CustID)
         {
-			using (var db = new AppPetCareContext())
-			{
-				var list = db.Pet
-						.Where(pet => pet.CustomerID == CustID);
-				IndexView.Show(list);
-			}
+            using var db = new AppPetCareContext();
+            var list = db.Pet
+                    .Where(pet => pet.CustomerID == CustID);
+            IndexView.Show(list);
         }
 
         public static void Add(int CustID)
@@ -27,30 +25,26 @@ namespace PetCare
 
         public static void Add(Pet pet, bool isValid)
         {
-            using (var context = new AppPetCareContext())
+            using var context = new AppPetCareContext();
+            if (isValid)
             {
-				if(isValid)
-                {
-					context.Pet.Add(pet);
-					context.SaveChanges();
-					AddView.Success();
-				}
-                else
-                {
-					AddView.Failed();
-                }
+                context.Pet.Add(pet);
+                context.SaveChanges();
+                AddView.Success();
+            }
+            else
+            {
+                AddView.Failed();
             }
         }
 
 		public static void Delete(int CustID)
         {
-			using (var db = new AppPetCareContext())
-			{
-				var list = db.Pet
-						.Where(pet => pet.CustomerID == CustID);
-				int count = list.Count();
-				DeleteView.Show(CustID, count);
-			}
+            using var db = new AppPetCareContext();
+            var list = db.Pet
+                    .Where(pet => pet.CustomerID == CustID);
+            int count = list.Count();
+            DeleteView.Show(CustID, count);
         }
 
         public static void Delete(int CustID, int PetRemoveID)
@@ -62,14 +56,10 @@ namespace PetCare
 				{
 					DeleteView.Success(pet.Name);
 					db.Remove(pet);
-
-					var rsv = db.Reservations.SingleOrDefault(res => res.PetID == PetRemoveID);
-					if (rsv != default)
-					{
-						db.Remove(rsv);
-
-					}
 					db.SaveChanges();
+
+                    DeleteReservationToo(PetRemoveID);
+
 				}
 				else
 				{
@@ -78,17 +68,27 @@ namespace PetCare
 			}
 		}
 
+		private static void DeleteReservationToo(int PetRemoveID)
+        {
+            using var db = new AppPetCareContext();
+            var rsv = db.Reservations.SingleOrDefault(res => res.PetID == PetRemoveID);
+            if (rsv != default)
+            {
+                db.Remove(rsv);
+                db.SaveChanges();
+            }
+
+        }
+
 		public static void Detail(int CustID)
         {
-			using (var db = new AppPetCareContext())
-            {
-				var list = db.Pet
-						.Where(pet => pet.CustomerID == CustID);
-				int count = list.Count();
+            using var db = new AppPetCareContext();
+            var list = db.Pet
+                    .Where(pet => pet.CustomerID == CustID);
+            int count = list.Count();
 
-				DetailView.Show(CustID, count);
-			}
-				
+            DetailView.Show(CustID, count);
+
         }
 
 		public static void Detail(int CustID, int PetDetailID)

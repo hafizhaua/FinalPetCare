@@ -9,26 +9,28 @@ namespace PetCare
     {
 		static void Main(string[] args)
 		{
-            using (var context = new AppPetCareContext())
-            {
-                var customer1 = new Customer
-                {
-                    Username = "pboasyik",
-                    Password = "asyikbanget"
-                };
-
-                var customer2 = new Customer
-                {
-                    Username = "CatRescuer",
-                    Password = "ilovecat"
-                };
-
-                context.Customers.Add(customer1);
-                context.Customers.Add(customer2);
-                context.SaveChanges();
-            }
-
+            GenerateAccount();
             LoginController.Index();
+        }
+
+        private static void GenerateAccount()
+        {
+            using var context = new AppPetCareContext();
+            var customer1 = new Customer
+            {
+                Username = "pboasyik",
+                Password = "asyikbanget"
+            };
+
+            var customer2 = new Customer
+            {
+                Username = "CatRescuer",
+                Password = "ilovecat"
+            };
+
+            context.Customers.Add(customer1);
+            context.Customers.Add(customer2);
+            context.SaveChanges();
         }
     }
 }

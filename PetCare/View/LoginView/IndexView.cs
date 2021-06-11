@@ -11,22 +11,42 @@ namespace PetCare.View.LoginView
         public static void Show()
         {
             Console.Clear();
-            Console.WriteLine("Welcome to the Pet Care!");
-            Console.WriteLine("Please log in to your account.");
-            Console.WriteLine("======= Login Form =======");
+            Console.WriteLine(
+                "Welcome to the Pet Care!\n" +
+                "Please log in to your account.\n" +
+                "======= Login Form ======="
+            );
 
-            Console.Write("Username : ");
-            string uname = Console.ReadLine();
-            Console.Write("Password : ");
-            string pass = ReadPassword();
+            string uname = InputUname();
+            string pass = InputPass();
 
             LoginController.Index(uname, pass);
+        }
+
+        private static string InputUname()
+        {
+            Console.Write("Username : ");
+            return Console.ReadLine();
+        }
+
+        private static string InputPass()
+        {
+            Console.Write("Password : ");
+            return ReadPassword();
         }
 
         public static string ReadPassword()
         {
             string password = "";
             ConsoleKeyInfo info = Console.ReadKey(true);
+            password = EvaluateTyping(info, password);
+
+            Console.WriteLine();
+            return password;
+        }
+
+        private static string EvaluateTyping(ConsoleKeyInfo info, string password)
+        {
             while (info.Key != ConsoleKey.Enter)
             {
                 if (info.Key != ConsoleKey.Backspace)
@@ -47,7 +67,7 @@ namespace PetCare.View.LoginView
                 }
                 info = Console.ReadKey(true);
             }
-            Console.WriteLine();
+
             return password;
         }
 

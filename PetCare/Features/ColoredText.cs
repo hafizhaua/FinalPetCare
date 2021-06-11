@@ -11,36 +11,37 @@ namespace PetCare
         public static void Red(string s)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine();
-            Console.WriteLine(s);
-            Console.WriteLine("Press ENTER to back ..");
-            Console.ResetColor();
-            Console.ReadLine();
+            EnterBackMessage(s);
         }
+
         public static void Yellow(string s)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(); 
-            Console.WriteLine(s);
-            Console.WriteLine("Press ENTER to continue ..");
-            Console.ResetColor();
-            Console.ReadLine();
+            EnterContinueMessage(s);
         }
+
         public static void Green(string s)
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine();
-            Console.WriteLine(s);
-            Console.WriteLine("Press ENTER to continue ..");
-            Console.ResetColor();
-            Console.ReadLine();
+            EnterContinueMessage(s);
         }
-        public static void Blue(string s)
+
+        private static void EnterContinueMessage(string s)
         {
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine();
-            Console.WriteLine(s);
+            Console.WriteLine($"\n{s}");
             Console.WriteLine("Press ENTER to continue ..");
+            ResetColor();
+        }
+
+        private static void EnterBackMessage(string s)
+        {
+            Console.WriteLine($"\n{s}");
+            Console.WriteLine("Press ENTER to back ..");
+            ResetColor();
+        }
+
+        private static void ResetColor()
+        {
             Console.ResetColor();
             Console.ReadLine();
         }

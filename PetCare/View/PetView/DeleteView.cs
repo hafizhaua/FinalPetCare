@@ -10,16 +10,27 @@ namespace PetCare.View.PetView
     {
         public static void Show(int CustID, int count)
         {
-            if (count > 0)
+            switch (count)
             {
-                Console.Write($"Input pet ID : ");
-                int PetRemoveID = Convert.ToInt32(Console.ReadLine());
-                PetController.Delete(CustID, PetRemoveID);
+                case 0:
+                    Console.WriteLine("List is empty.");
+                    break;
+                default:
+                    Console.Write($"Input pet ID : ");
+                    try
+                    {
+                        int PetRemoveID = Convert.ToInt32(Console.ReadLine());
+                        PetController.Delete(CustID, PetRemoveID);
+                    }
+                    catch (Exception e)
+                    {
+                        ColoredText.Red(e.Message);
+                        PetManageMenuController petManageMenu = new();
+                        petManageMenu.Index(CustID);
+                    }
+                    break;
             }
-            else
-            {
-                Console.WriteLine("List is empty.");
-            }
+            
             Console.WriteLine();
         }
 

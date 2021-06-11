@@ -14,8 +14,17 @@ namespace PetCare.View.PetView
             if (count > 0)
             {
                 Console.Write($"Input pet ID: ");
-                int PetDetailID = Convert.ToInt32(Console.ReadLine());
-                PetController.Detail(CustID, PetDetailID);
+                try
+                {
+                    int PetDetailID = Convert.ToInt32(Console.ReadLine());
+                    PetController.Detail(CustID, PetDetailID);
+                }
+                catch (Exception e)
+                {
+                    ColoredText.Red(e.Message);
+                    PetManageMenuController petManageMenu = new();
+                    petManageMenu.Index(CustID);
+                }
             }
             else
             {

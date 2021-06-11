@@ -8,35 +8,35 @@ using PetCare.View.ReservationManageMenuView;
 
 namespace PetCare
 {
-    public static class ReservationManageMenuController
+    public class ReservationManageMenuController : IMenuController
     {
 
-        public static void Index(int CustID)
+        public void Index(int CustID)
         {
+
             IndexView.Show(CustID);
         }
 
-        public static void Index(int CustID, string opt)
+        public void Index(int CustID, string opt)
         {
-
-            if (opt == "a")
+            switch (opt)
             {
-                Select(CustID);
-                Index(CustID);
-            }
-            else if (opt == "b")
-            {
-                PetController.Add(CustID);
-                Index(CustID);
-            }
-            else if (opt == "c")
-            {
-                MainMenuController.Index(CustID);
-            }
-            else
-            {
-                IndexView.Failed();
-                Index(CustID);
+                case "a":
+                    Select(CustID);
+                    Index(CustID);
+                    break;
+                case "b":
+                    PetController.Add(CustID);
+                    Index(CustID);
+                    break;
+                case "c":
+                    MainMenuController mainMenuController = new();
+                    mainMenuController.Index(CustID);
+                    break;
+                default:
+                    IndexView.Failed();
+                    Index(CustID);
+                    break;
             }
         }
 
@@ -47,18 +47,16 @@ namespace PetCare
 
         public static void Select(int SelectionID, int CustID)
         {
-            using (var db = new AppPetCareContext())
-            {
-                bool exist = db.Pet.Where(pet => pet.CustomerID == CustID && pet.PetID == SelectionID).Any();
+            using var db = new AppPetCareContext();
+            bool exist = db.Pet.Where(pet => pet.CustomerID == CustID && pet.PetID == SelectionID).Any();
 
-                if (exist)
-                {
-                    ReservationController.Add(CustID, SelectionID);
-                }
-                else
-                {
-                    SelectView.Failed();
-                }
+            if (exist)
+            {
+                ReservationController.Add(CustID, SelectionID);
+            }
+            else
+            {
+                SelectView.Failed();
             }
         }
 

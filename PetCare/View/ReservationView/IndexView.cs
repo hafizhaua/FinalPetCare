@@ -12,14 +12,10 @@ namespace PetCare.View.ReservationView
         public static void Show(IQueryable<Reservation> reservationList)
         {
             Console.Clear();
-            int sum = 0;
             PrintHeader();
+            int sum = 0;
 
-            foreach (var item in reservationList)
-            {
-                Console.Write($"| {item.PetID,6} | {item.Services,9} | {item.ReservationID,6} | {item.Price,8} |\n");
-                sum += item.Price;
-            }
+            sum = PrintTableContent(reservationList, sum);
 
             PrintFooter(sum);
 
@@ -32,6 +28,16 @@ namespace PetCare.View.ReservationView
             Console.WriteLine("+--------+-----------+--------+----------+");
             Console.WriteLine("| PetID  |  Service  | RsrvID | Price    |");
             Console.WriteLine("+--------+-----------+--------+----------+");
+        }
+
+        private static int PrintTableContent(IQueryable<Reservation> reservationList, int sum)
+        {
+            foreach (var item in reservationList)
+            {
+                Console.Write($"| {item.PetID,6} | {item.Services,9} | {item.ReservationID,6} | {item.Price,8} |\n");
+                sum += item.Price;
+            }
+            return sum;
         }
 
         private static void PrintFooter(int sum)

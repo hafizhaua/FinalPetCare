@@ -13,17 +13,28 @@ namespace PetCare.View.PetManageMenuView
 			Console.Clear();
 			Console.WriteLine("== Manage Pet List =========");
 
-			PetController.Index(CustID);
+			PrintTable(CustID);
 
+			ShowOption();
+			Console.Write("Input: ");
+			string opt = Console.ReadLine().ToLower();
+
+			PetManageMenuController petManageMenu = new();
+			petManageMenu.Index(CustID, opt);
+		}
+
+		private static void PrintTable(int CustID)
+        {
+            PetController.Index(CustID);
+		}
+
+		private static void ShowOption()
+        {
 			Console.WriteLine("Option:");
 			Console.WriteLine("\ta. Add pet");
 			Console.WriteLine("\tb. See details");
 			Console.WriteLine("\tc. Remove pet");
 			Console.WriteLine("\td. Back");
-			Console.Write("Input: ");
-			string opt = Console.ReadLine().ToLower();
-
-			PetManageMenuController.IndexOption(CustID, opt);
 		}
 
 		public static void Failed()

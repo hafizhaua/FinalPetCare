@@ -8,9 +8,9 @@ using PetCare.View.ReservationView.HotelService;
 
 namespace PetCare
 {
-    public static class PetHotelServiceController
+    public class PetHotelServiceController : IServiceController
     {
-        public static void Index(Pet pet)
+        public void Index(Pet pet)
         {
             var rsv = new Reservation
             {
@@ -19,13 +19,13 @@ namespace PetCare
                 PetID = pet.PetID
             };
 
-            rsv.Period = IndexView.getPeriod();
+            rsv.Period = IndexView.GetPeriod();
             rsv.Price = PetHotelService.CalculateTotal(rsv.Period, pet.Weight);
 
-            Validate(rsv);
+            ValidatePeriod(rsv);
         }
 
-        public static void Validate(Reservation rsv)
+        private static void ValidatePeriod(Reservation rsv)
         {
             if (rsv.Period > 0)
             {
@@ -33,11 +33,11 @@ namespace PetCare
             }
             else
             {
-                ColoredText.Red("Invalid date.");
+                ValidationView.InvalidDate();
             }
         }
 
-        public static void Validate(bool val, Reservation rsv)
+        public void ValidateUser(bool val, Reservation rsv)
         {
             if (val) 
             {
@@ -45,7 +45,7 @@ namespace PetCare
             }
             else
             {
-                ColoredText.Yellow("Reservation canceled.");
+                ValidationView.UserDeclined();
             }
         }
     }

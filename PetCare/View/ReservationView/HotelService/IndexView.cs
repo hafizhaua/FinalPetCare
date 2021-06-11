@@ -9,24 +9,22 @@ namespace PetCare.View.ReservationView.HotelService
 {
     public static class IndexView
     {
-        public static int getPeriod()
+        public static int GetPeriod()
         {
             DateTime startDate, endDate;
-            DateTime now = DateTime.Today;
 
             Console.Write("\nEnter start date (MM/DD/YY): ");
-            startDate = getDate();
+            startDate = GetDate();
 
             Console.Write("Enter pickup date (MM/DD/YY): ");
-            endDate = getDate();
+            endDate = GetDate();
 
             return (endDate - startDate).Days;
         }
 
-        private static DateTime getDate()
+        private static DateTime GetDate()
         {
-            DateTime date;
-            if (!DateTime.TryParse(Console.ReadLine(), out date) || date < DateTime.Today)
+            if (!DateTime.TryParse(Console.ReadLine(), out DateTime date) || date < DateTime.Today)
             {
                 ColoredText.Red("Invalid value. Set to today's instead.");
                 date = DateTime.Today;

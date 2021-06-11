@@ -7,40 +7,40 @@ using PetCare.View.PetManageMenuView;
 
 namespace PetCare
 {
-    public static class PetManageMenuController
+    public class PetManageMenuController : IMenuController
     {
-        public static void Index(int CustID)
+        public void Index(int CustID)
         {
             IndexView.Show(CustID);
         }
 
-        public static void IndexOption(int CustID, string opt)
+        public void Index(int CustID, string opt)
         {
-			if (opt == "a")
-			{
-				PetController.Add(CustID);
-				Index(CustID);
-			}
-			else if (opt == "b")
-			{
-				PetController.Detail(CustID);
-				Index(CustID);
-			}
-			else if (opt == "c")
-			{
-				PetController.Delete(CustID);
-				Index(CustID);
-			}
-			else if (opt == "d")
-			{
-				Console.WriteLine();
-				MainMenuController.Index(CustID);
-			}
-			else
-			{
-				IndexView.Failed();
-				Index(CustID);
-			}
-		}
+
+            switch (opt)
+            {
+                case "a":
+                    PetController.Add(CustID);
+                    Index(CustID);
+                    break;
+                case "b":
+                    PetController.Detail(CustID);
+                    Index(CustID);
+                    break;
+                case "c":
+                    PetController.Delete(CustID);
+                    Index(CustID);
+                    break;
+                case "d":
+                    Console.WriteLine();
+                    MainMenuController mainMenuController = new();
+                    mainMenuController.Index(CustID);
+                    break;
+                default:
+                    IndexView.Failed();
+                    Index(CustID);
+                    break;
+            }
+        }
     }
 }

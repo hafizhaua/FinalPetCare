@@ -15,6 +15,7 @@ namespace PetCare.View.ReservationManageMenuView
                 Console.Write("Input the ID of the pet: ");
                 int idSelection = Convert.ToInt32(Console.ReadLine());
 
+                ReservationManageMenuController reservationManageMenu = new();
                 ReservationManageMenuController.Select(idSelection, CustID);
             }
             catch(Exception e)

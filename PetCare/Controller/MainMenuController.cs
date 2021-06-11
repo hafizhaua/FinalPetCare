@@ -8,9 +8,9 @@ using PetCare.View.MainMenuView;
 
 namespace PetCare
 {
-	public static class MainMenuController
+	public class MainMenuController : IMenuController
 	{
-		public static void Index(int CustID)
+		public void Index(int CustID)
 		{
             using var db = new AppPetCareContext();
             string name = db.Customers
@@ -18,30 +18,30 @@ namespace PetCare
             IndexView.Show(CustID, name);
         }
 
-        public static void IndexOption(int CustID, string opt)
+        public void Index(int CustID, string opt)
         {
-
-            if (opt == "1")
+            switch (opt)
             {
-                PetManageMenuController.Index(CustID);
-            }
-            else if (opt == "2")
-            {
-                ReservationManageMenuController.Index(CustID);
-            }
-            else if (opt == "3")
-            {
-                ReservationController.Index(CustID);
-            }
-            else if (opt == "4")
-            {
-                IndexView.LogOut();
-                Exit.Now();
-                LoginController.Index();
-            }
-            else
-            {
-                IndexView.Failed();
+                case "1":
+                    PetManageMenuController petManageMenu = new();
+                    petManageMenu.Index(CustID);
+                    break;
+                case "2":
+                    ReservationManageMenuController reservationManageMenu = new();
+                    reservationManageMenu.Index(CustID);
+                    break;
+                case "3":
+                    ReservationController.Index(CustID);
+                    break;
+                case "4":
+                    IndexView.LogOut();
+                    Exit.Now();
+                    LoginController.Index();
+                    break;
+                default:
+                    IndexView.Failed();
+                    Index(CustID);
+                    break;
             }
         }
 	}

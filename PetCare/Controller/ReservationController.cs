@@ -18,7 +18,8 @@ namespace PetCare
             {
                 IndexView.Show(reservationList);
             }
-            MainMenuController.Index(CustID);
+            MainMenuController mainMenuController = new();
+            mainMenuController.Index(CustID);
         }
 
         public static void Add(int CustID, int PetID)
@@ -38,7 +39,12 @@ namespace PetCare
         {
             if (opt == "1" || opt == "pet hotel")
             {
-                PetHotelServiceController.Index(pet);
+                PetHotelServiceController petHotelService = new();
+                petHotelService.Index(pet);
+            }
+            else
+            {
+                ColoredText.Red("Invalid option.");
             }
         }
 

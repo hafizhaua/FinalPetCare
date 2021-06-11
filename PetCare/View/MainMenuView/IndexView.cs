@@ -13,18 +13,27 @@ namespace PetCare.View.MainMenuView
             Console.Clear();
             Console.WriteLine("=========== PET CARE ==========");
             Console.WriteLine($"Welcome to Pet Care, {name}!");
-            Console.WriteLine("Choose a menu:");
-            Console.WriteLine("\t1. Your Pet List");
-            Console.WriteLine("\t2. Reserve a Place");
-            Console.WriteLine("\t3. See Reservation");
-            Console.WriteLine("\t4. Log Out");
+            
+            PrintMenu();
 
             Console.Write("Input: ");
             string opt = Console.ReadLine();
             Console.WriteLine();
 
-            MainMenuController.IndexOption(CustID, opt);
+            MainMenuController mainMenuController = new();
+            mainMenuController.Index(CustID, opt);
 		}
+
+        private static void PrintMenu()
+        {
+            Console.WriteLine(
+                "Choose a menu:\n" +
+                "\t1. Your Pet List\n" +
+                "\t2. Reserve a Place\n" +
+                "\t3. See Reservation\n" +
+                "\t4. Log Out"
+            );
+        }
 
 		public static void Failed()
 		{

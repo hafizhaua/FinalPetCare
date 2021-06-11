@@ -13,14 +13,26 @@ namespace PetCare.View.ReservationView.HotelService
         {
             Console.WriteLine($"You plan to reserve {rsv.Period} day(s) of pet boarding for IDR {rsv.Price}");
             Console.Write("Proceed? (y/n) ");
-            bool val = checkInput();
-            PetHotelServiceController.Validate(val, rsv);
+            bool val = CheckInput();
+
+            PetHotelServiceController petHotelService = new();
+            petHotelService.ValidateUser(val, rsv);
         }
 
-        public static bool checkInput()
+        public static bool CheckInput()
         {
             if (Console.ReadLine().ToLower() == "y") return true;
             else return false;
+        }
+
+        public static void InvalidDate()
+        {
+            ColoredText.Red("Invalid date.");
+        }
+
+        public static void UserDeclined()
+        {
+            ColoredText.Yellow("Reservation canceled.");
         }
     }
 }

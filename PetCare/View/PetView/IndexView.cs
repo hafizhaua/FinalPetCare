@@ -13,17 +13,29 @@ namespace PetCare.View.PetView
         {
 			int count = list.Count();
 
-			if (count > 0) Console.WriteLine("\nYou have {0} pet(s) on the list!", count);
-			else Console.WriteLine("Your list is empty.");
+            switch (count)
+            {
+                case 0:
+                    Console.WriteLine("Your list is empty.");
+                    break;
+                default:
+                    Console.WriteLine("\nYou have {0} pet(s) on the list!", count);
+                    break;
+            }
 
-			Console.WriteLine("+---------+--------+--------+");
-			Console.WriteLine("| Name    | Animal | ID     |");
-			Console.WriteLine("+---------+--------+--------+");
-			foreach (var pet in list)
-			{
-				Console.Write($"| {pet.Name,7} | {pet.Animal,6} | {pet.PetID,6} |\n");
-			}
-			Console.WriteLine("+---------+--------+--------+");
+            FillTable(list);
 		}
+
+        private static void FillTable(IQueryable<Pet> list)
+        {
+            Console.WriteLine("+---------+--------+--------+");
+            Console.WriteLine("| Name    | Animal | ID     |");
+            Console.WriteLine("+---------+--------+--------+");
+            foreach (var pet in list)
+            {
+                Console.Write($"| {pet.Name,7} | {pet.Animal,6} | {pet.PetID,6} |\n");
+            }
+            Console.WriteLine("+---------+--------+--------+");
+        }
     }
 }
